@@ -1,0 +1,2 @@
+model_checkpoint_path: "acm_allMP_multi_fea_.ckpt"
+all_model_checkpoint_paths: "acm_allMP_multi_fea_.ckpt"
