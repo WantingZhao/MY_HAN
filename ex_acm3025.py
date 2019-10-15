@@ -40,6 +40,7 @@ n_heads = [8, 1]  # additional entry for the output layer
 residual = False
 nonlinearity = tf.nn.elu
 model = HeteGAT_multi
+features_name='feature'
 processed_data_path='processed_data/acm/ACM3025.mat' #'processed_data/acm/ACM3025.mat'#
 
 
@@ -69,7 +70,7 @@ def sample_mask(idx, l):
 
 def analysis_data_acm(data):
     print('data---------\n',data)
-    truelabels, truefeatures = data['label'], data['feature'].astype(float)
+    truelabels, truefeatures = data['label'], data[features_name].astype(float)
     N = truefeatures.shape[0]
     rownetworks = [data['PAP'] - np.eye(N), data['PLP'] - np.eye(N)]  # , data['PTP'] - np.eye(N)]
 
@@ -109,7 +110,7 @@ for k in range(1,K+1):
     data = sio.loadmat(processed_data_path)
     print(data)
     if k>1:
-        data['feature']= np.concatenate(data['feature'],np.load(embedding_Q % (k-1)),axis=1)
+        data[features_name]= np.concatenate(data[features_name],np.load(embedding_Q % (k-1)),axis=1)
     adj_list, fea_list, y_train, y_val, y_test, train_mask, val_mask, test_mask = analysis_data_acm(data)
     if featype == 'adj':
         fea_list = adj_list
@@ -278,7 +279,7 @@ for k in range(1,K+1):
                 fd.update(fd3)
                 loss_value_ts, acc_ts, jhy_final_embedding = sess.run([loss, accuracy, final_embedding],
                                                                       feed_dict=fd)
-                data['feature'] = np.concatenate((data['feature'], jhy_final_embedding), axis=1)  # jhy_final_embedding
+                data[features_name] = np.concatenate((data[features_name], jhy_final_embedding), axis=1)  # jhy_final_embedding
                 np.save(embedding_Q % k, jhy_final_embedding)
                 print('jhy_final_embedding', jhy_final_embedding.shape, "\n", jhy_final_embedding)
                 ts_loss += loss_value_ts
