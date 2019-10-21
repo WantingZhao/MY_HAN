@@ -14,7 +14,7 @@ import sys
 
 dataset = 'dblp'
 featype = 'fea'
-root_path = 'result/%s/' %dataset + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'/'
+root_path = 'result/%s/' %dataset + datetime.datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'/'
 if not os.path.exists('result/%s/' %dataset):
     os.makedirs('result/%s/' %dataset)
 if not os.path.exists(root_path):

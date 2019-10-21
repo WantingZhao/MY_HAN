@@ -11,7 +11,7 @@ from utils import process
 # 禁用gpu
 import os
 import sys
-root_path = 'result/acm/'+datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'/'
+root_path = 'result/acm/'+datetime.datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'/'
 if not os.path.exists(root_path):
     os.makedirs(root_path)
 sys.stdout = open(root_path+'log.log', 'a')
